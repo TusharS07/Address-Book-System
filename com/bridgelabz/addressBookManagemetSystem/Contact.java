@@ -49,7 +49,10 @@ public class Contact {
                     4: View Contact.\s
                     5: Search Contact in City or State.\s
                     6: Sort Contact By Name.\s
-                    7: Exit.""" );
+                    7: Sort Contact By City.\s
+                    8: Sort Contact By State.\s
+                    9: Sort Contact By ZipCode.\s
+                    10: Exit.""" );
             System.out.println();
             System.out.print("Enter Your Choice: ");
             choice = sc.nextInt();
@@ -79,6 +82,18 @@ public class Contact {
                     break;
 
                 case 7:
+                    contact.sortContactByCity(userData);
+                    break;
+
+                case 8:
+                    contact.sortContactByState(userData);
+                    break;
+
+                case 9:
+                    contact.sortContactByZipCode(userData);
+                    break;
+
+                case 10:
                     System.out.println(" Exit");
                     return;
 
@@ -277,4 +292,22 @@ public class Contact {
                 .forEach(System.out::println);
     }
 
+    //UC12 = Ability to sort the entries in the address book by City, State, or Zip - Write functions to sort
+    public void sortContactByCity(ArrayList<UserData> userData) {
+        userData.stream().sorted(Comparator.comparing(UserData::getCityName))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+    }
+
+    public void sortContactByState(ArrayList<UserData> userData) {
+        userData.stream().sorted(Comparator.comparing(UserData::getStateName))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+    }
+
+    public void sortContactByZipCode(ArrayList<UserData> userData) {
+        userData.stream().sorted(Comparator.comparing(UserData::getZipCode))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+    }
 }
