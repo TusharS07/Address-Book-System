@@ -1,6 +1,7 @@
 package com.bridgelabz.addressBookManagemetSystem;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -47,7 +48,8 @@ public class Contact {
                     3: Delete Contact.\s
                     4: View Contact.\s
                     5: Search Contact in City or State.\s
-                    6: Exit.""" );
+                    6: Sort Contact By Name.\s
+                    7: Exit.""" );
             System.out.println();
             System.out.print("Enter Your Choice: ");
             choice = sc.nextInt();
@@ -73,6 +75,10 @@ public class Contact {
                     break;
 
                 case 6:
+                    contact.sortContactByName(userData);
+                    break;
+
+                case 7:
                     System.out.println(" Exit");
                     return;
 
@@ -248,7 +254,7 @@ public class Contact {
     //UC9 = Ability to view Persons by City or State
     //Using Java Streams
 
-    private void searchPersonByCityOrState(ArrayList<UserData> userData) {
+    public void searchPersonByCityOrState(ArrayList<UserData> userData) {
         System.out.print("Enter The City Name: ");
         String city = sc.next();
 
@@ -263,4 +269,12 @@ public class Contact {
         long count = userData.stream().filter(data -> data.getCityName().equalsIgnoreCase(city) && data.getStateName().equalsIgnoreCase(state)).count();
         System.out.println("\n" +count+ " Persons Found in City " +city+ " and " +state+ ". \n");
     }
+
+    //UC11 = Ability to sort the entries in the address book alphabetically by Person’s name
+    public void sortContactByName(ArrayList<UserData> userData) {
+        userData.stream().sorted(Comparator.comparing(UserData::getFirstName))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+    }
+
 }
